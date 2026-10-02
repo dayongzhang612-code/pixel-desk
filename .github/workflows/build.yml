@@ -6,35 +6,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-          
       - uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.2
-      - name: Unpack project
-        run: |
-          base64 -d > p.tgz <<'B64'
-          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
+      - run: unzip -q PixelDesk.zip
+      - run: cd PixelDesk && gradle assembleDebug --no-daemon --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pixel-desk-apk
+          path: PixelDesk/app/build/outputs/apk/debug/*.apk          j8/9WGYdDs+wH8c1hsAmIM2ngNYHJC7xHECfcQBxcIQC3wqDmIbnb+6+DFO8JMnFKHG1myXLLri/NfXAHvjFoF27T2fJGtiU6p4E
           66CQZskWk9VoqAV7f1ysuu17I2ARRBu4MPlK5r1uuKxM67sDmmpkwgkWCgCxmZsCrcmsIlJcqja8cMGeyO7AIrYlYCRtlggHXyag
           DdybQ78EBaIsfDiCNYZpXp0laHBXwRyy83HVDsh2FnV4HrBa4Bdzga6BrbKKeG7rYle1OhTL7dHpjjTMOsx0NMSrFWieqO7mNl4v
           agQT9JdhFUJ5rWVaUTcW7YHlZ2hPqYTWG1t9wHhRK8eEXgHpzhL8PyOBpFUCMq07S9BzorxGGBvoiOWPS0AHR6eeP3DpEvUprnZ5
